@@ -5,35 +5,31 @@
 #                                                     +:+ +:+         +:+      #
 #    By: abhousse <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/12/08 16:33:21 by abhousse          #+#    #+#              #
-#    Updated: 2021/12/08 16:33:22 by abhousse         ###   ########.fr        #
+#    Created: 2021/12/09 22:39:51 by abhousse          #+#    #+#              #
+#    Updated: 2021/12/09 22:39:55 by abhousse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-HEADER = ft_printf.h
-
-CC = cc
-
-CFLAGS = -Wall -Wextra -Werror -I.
-
-SRCS = ft_printf.c ft_printf_utils.c
-
-OBJS = ${SRCS:.c=.o}
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+SRC = ft_printf.c ft_printf_utlis.c
+OBJS = $(SRC:.c=.o)
 
 NAME = libftprintf.a
+HEADER = ft_printf.h
 
-$(NAME):    ${OBJS}
-			ar -rcs $@ $^
+%.o: %.c
+	$(CC) $(CLFAGS) -c $^ -o $@ -I $(HEADER)
 
-%.o : %.c $(HEADER)
-			$(CC) $(CFLAGS) -c $< -o $@
- 
-all:    $(NAME)
+$(NAME): $(OBJS)
+	ar -rcs $@ $^
 
-clean:    
-		rm -f ${OBJS}
+all: $(NAME)
 
-fclean:    clean
-		rm -f ${NAME}
-		
-re:        fclean all
+clean:
+	rm -f $(OBJS)
+
+fclean:	clean
+	rm -f $(NAME)
+
+re:	fclean all
